@@ -20,13 +20,25 @@ import serverRelated.Server;
  *         GCS d- s+:+ a C++ UL/M P L+ E--- W++ N K- w-- M+ t+ 5 X R+ !tv b+ D+ G- e+++ h+ r- y+
  */
 public class Player {
+	ThreadTimer timerattk;
+	private int playerLife = 100;
+	int count = 0;
 	
+	public int getPlayerLife() {
+		return playerLife;
+	}
+
+	public void setPlayerLife(int playerLife) {
+		this.playerLife = playerLife;
+	}
 	private float x = 300, y = 300;
 	private int direction = 2;
 	private boolean onStair = false;
 	private boolean moving = false;
+	
+	
 	private boolean notMoovingSend = false;
-	private Animation[] animations = new Animation[8];
+	private Animation[] animations = new Animation[12];
 	private Server serv;
 	private Map map;
 	private static PlayerActionSer playerAS = new PlayerActionSer();
@@ -62,6 +74,13 @@ public class Player {
 		this.animations[5] = loadAnimation(spriteSheet, 1, 9, 9);
 		this.animations[6] = loadAnimation(spriteSheet, 1, 9, 10);
 		this.animations[7] = loadAnimation(spriteSheet, 1, 9, 11);
+		spriteSheet = new SpriteSheet("perso/perso2.png", 192, 192);
+		this.animations[8] = loadAnimation(spriteSheet, 0, 6, 0);
+		this.animations[9] = loadAnimation(spriteSheet, 0, 6, 1);
+		this.animations[10] = loadAnimation(spriteSheet, 0, 6, 2);
+		this.animations[11] = loadAnimation(spriteSheet, 0, 6, 3);
+		
+		
 	}
 
 	private Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
@@ -75,7 +94,34 @@ public class Player {
 	public void render(Graphics g) {
 		g.setColor(new Color(0, 0, 0, .5f));
 		g.fillOval((int) x - 16, (int) y - 8, 32, 16);
-		g.drawAnimation(animations[direction + (moving ? 4 : 0)], (int) x - 32, (int) y - 60);
+		if (getPlayerAS().isAttk()) {
+			if(count == 0) {
+				timerattk = new ThreadTimer(600);
+				timerattk.start();	
+				count++;
+			}
+			else if (timerattk.isAlive()) {
+				g.drawAnimation(animations[direction + 8], (int) x - 96, (int) y - 120);
+			}
+		
+			
+		
+		
+		
+				
+			
+			else {
+				count = 0;
+				getPlayerAS().setAttk(false);
+			}
+			
+			
+			
+		}
+		else {
+			g.drawAnimation(animations[direction + (moving ? 4 : 0)], (int) x - 32, (int) y - 60);
+		}
+		
 		trueTypeFont.drawString(x -16, y-100, "ID : " + playerAS.getId() , Color.black);
 		trueTypeFont.drawString(x - 16, y-80, "X = "+ x + "| Y = "+ y, Color.black);
 	}

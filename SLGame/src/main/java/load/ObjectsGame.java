@@ -47,10 +47,10 @@ public class ObjectsGame extends BasicGameState {
 	public static void setServTest(Server servTest) {
 		ObjectsGame.servTest = servTest;
 	}
-	public static SpriteSheet getSpritesheet() {
+	public static SpriteSheet[] getSpritesheet() {
 		return spritesheet;
 	}
-	public static void setSpritesheet(SpriteSheet spritesheet) {
+	public static void setSpritesheet(SpriteSheet[] spritesheet) {
 		ObjectsGame.spritesheet = spritesheet;
 	}
 	public static int getId() {
@@ -63,7 +63,7 @@ public class ObjectsGame extends BasicGameState {
 	private Camera camera = new Camera(player);
 	public static Server servTest = new Server();
 	public boolean gotConnection = false;
-	public static SpriteSheet spritesheet;
+	public static SpriteSheet[] spritesheet = new SpriteSheet[2];
 	//static public Animation[] animations = new Animation[8];
 	//TEST A CHANGER AVEC PSEUDO
 	
@@ -76,8 +76,8 @@ public class ObjectsGame extends BasicGameState {
 	public void init(GameContainer container, StateBasedGame game ) throws SlickException {
 		this.container = container;
 		container.setAlwaysRender(true);
-		spritesheet = new SpriteSheet("perso/perso.png", 64, 64);
-		
+		spritesheet[0] = new SpriteSheet("perso/perso.png", 64, 64);
+		spritesheet[1] = new SpriteSheet("perso/perso2.png", 192, 192);
 		ObjectsGame.map.init();
 		
 		PlayerController controler = new PlayerController(ObjectsGame.player);

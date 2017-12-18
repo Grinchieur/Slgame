@@ -24,35 +24,44 @@ public class OtherPlayer {
 	private int direction = 2;
 	private boolean onStair = false;
 	private boolean moving = false;
-	private Animation[] animations = new Animation[8];
-	SpriteSheet spriteSheet;
+	private Animation[] animations = new Animation[12];
+	SpriteSheet[] spriteSheet;
 	
 	private PlayerActionSer playerAS = new PlayerActionSer();
 	
 	
-	OtherPlayer(){
-		
-	}
-	public OtherPlayer(SpriteSheet givenSprite){
-		spriteSheet = givenSprite;
+	
+	public OtherPlayer() throws SlickException{
+		spriteSheet = ObjectsGame.spritesheet;
 		this.init();
 	}
 	
 	
 	
-	private void init() {
+	private void init() throws SlickException {
 		
 		
 			
 			System.out.println(" ANIMATION");
-			this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
-			this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
-			this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
-			this.animations[3] = loadAnimation(spriteSheet, 0, 1, 3);
-			this.animations[4] = loadAnimation(spriteSheet, 1, 9, 0);
-			this.animations[5] = loadAnimation(spriteSheet, 1, 9, 1);
-			this.animations[6] = loadAnimation(spriteSheet, 1, 9, 2);
-			this.animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
+			
+			this.animations[0] = loadAnimation(spriteSheet[0], 0, 1, 8);
+			this.animations[1] = loadAnimation(spriteSheet[0], 0, 1, 9);
+			this.animations[2] = loadAnimation(spriteSheet[0], 0, 1, 10);
+			this.animations[3] = loadAnimation(spriteSheet[0], 0, 1, 11);
+			this.animations[4] = loadAnimation(spriteSheet[0], 1, 9, 8);
+			this.animations[5] = loadAnimation(spriteSheet[0], 1, 9, 9);
+			this.animations[6] = loadAnimation(spriteSheet[0], 1, 9, 10);
+			this.animations[7] = loadAnimation(spriteSheet[0], 1, 9, 11);
+			
+			try {
+				this.animations[8] = loadAnimation(spriteSheet[1], 0, 6, 0);
+				this.animations[9] = loadAnimation(spriteSheet[1], 0, 6, 1);
+				this.animations[10] = loadAnimation(spriteSheet[1], 0, 6, 2);
+				this.animations[11] = loadAnimation(spriteSheet[1], 0, 6, 3);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	
 		
 	}
@@ -71,7 +80,16 @@ public class OtherPlayer {
 	public void render(Graphics g) {
 		g.setColor(new Color(0, 0, 0, .5f));
 		g.fillOval((int) x - 16, (int) y - 8, 32, 16);
-		g.drawAnimation(animations[playerAS.getDirection() + (playerAS.isMoving() ? 4 : 0)], (int) x - 32, (int) y - 60);
+		
+		if (getPAS().isAttk()) {
+			
+			
+		g.drawAnimation(animations[direction + 8], (int) x - 96, (int) y - 120);
+		}
+
+		else {
+			g.drawAnimation(animations[playerAS.getDirection() + (playerAS.isMoving() ? 4 : 0)], (int) x - 32, (int) y - 60);
+		}
 	}
 
 	public void update() {

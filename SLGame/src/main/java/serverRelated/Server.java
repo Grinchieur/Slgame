@@ -28,7 +28,7 @@ public class Server {
 		return connAccep;
 	}
 	
-	SpriteSheet spritesheet;
+	SpriteSheet spritesheet[] = new SpriteSheet[2];
 	Animation[] animations;
 	public void init( /*, Animation[] animations*/) throws IOException {
 		
@@ -42,7 +42,7 @@ public class Server {
 	    kryo.register(RequestConnection.class);
 	    kryo.register(AcceptedConnection.class);
 	    spritesheet = ObjectsGame.spritesheet;
-		client.addListener(new GMyListener(connectedPlayer, this,  spritesheet, ObjectsGame.getPlayer()));
+		client.addListener(new GMyListener(connectedPlayer, this, ObjectsGame.getPlayer()));
 	    client.start();
 	    client.connect(5000, "145.239.78.97", 54555, 54556);
 	    RequestConnection request = new RequestConnection();

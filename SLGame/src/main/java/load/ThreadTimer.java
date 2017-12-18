@@ -1,14 +1,19 @@
 package load;
 
 public class ThreadTimer extends Thread {
+	int time = 10000;
 	public ThreadTimer() {
 		
+	}
+public ThreadTimer(int howlong) {
+		time = howlong;
 	}
 	@Override
 	public void run() {
 		try {
 			System.out.println("in thread");
-			Thread.sleep(10000);
+			Thread.sleep(time);
+			
 			System.out.println("thread fini");
 			
 		} catch (InterruptedException e) {

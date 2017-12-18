@@ -18,10 +18,10 @@ public class GMyListener extends  Listener{
 	SpriteSheet spriteSheet;
 	Player player;
 	int clientID;
-	GMyListener(java.util.Map<Integer, OtherPlayer> connectedPla, Server serv, SpriteSheet givenSprite, Player player){
+	GMyListener(java.util.Map<Integer, OtherPlayer> connectedPla, Server serv, Player player){
 		connectedPlayer = connectedPla;
 		server = serv;
-		spriteSheet= givenSprite;
+		
 		
 		this.player = player;
 	}
@@ -56,8 +56,14 @@ public class GMyListener extends  Listener{
 			System.out.println("BEFORE ADDING");
 			PlayerActionSer tempPAS = new PlayerActionSer((AddPlayer) o);
 			System.out.println("AFTER ADDING");
+			try {
 			if( tempPAS.getId() != MainScreenGameState.id) {
-				OtherPlayer newPlayer = new OtherPlayer(spriteSheet);
+				OtherPlayer newPlayer;
+				
+					
+						newPlayer = new OtherPlayer();
+					
+				
 				if(tempPAS.getId() == clientID) {
 					System.out.println("ID du joueur");
 				}
@@ -103,6 +109,10 @@ public class GMyListener extends  Listener{
 		
 			
 				}
+			}
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
 			
